@@ -13,20 +13,20 @@
               <i class="el-icon-location"></i>
               <span>基础应用</span>
             </template>
-            <el-menu-item index="2-1" @click="toRouter('/app-erp/userManage')">用户管理</el-menu-item>
-            <el-menu-item index="2-2" @click="toRouter('/app-erp/entManage')">企业管理</el-menu-item>
+            <el-menu-item index="2-1" @click="toRouter('/app/app-erp/userManage')">用户管理</el-menu-item>
+            <el-menu-item index="2-2" @click="toRouter('/app/app-erp/entManage')">企业管理</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>融单应用</span>
             </template>
-            <el-menu-item index="3-1" @click="toRouter('/app-ebill/myBill')">我的融单</el-menu-item>
-            <el-menu-item index="3-2" @click="toRouter('/app-ebill/billOpen')">融单开立</el-menu-item>
+            <el-menu-item index="3-1" @click="toRouter('/app/app-ebill/myBill')">我的融单</el-menu-item>
+            <el-menu-item index="3-2" @click="toRouter('/app/app-ebill/billOpen')">融单开立</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main>
+      <el-main id="mask-container">
         <router-view/>
         <div id="sub-micro-container"></div>
       </el-main>
