@@ -1,3 +1,4 @@
+import {subAppRouter} from '@/config'
 // 需要隐藏的菜单url
 const hideMenuUrl = ['myTodo']
 const getMenuTreeList = (menuList) => {
@@ -50,4 +51,14 @@ const getParentMenus = (menuList) => {
   return menuList.filter(item => !item.parentId || item.parentId === item.id);
 }
 
-export {getMenuTreeList,getMenuPower,getParentMenus}
+const getMenuTitles = (menuList) => {
+  return menuList.reduce((obj,curItem) => {
+    if (curItem.url) {
+      const routerName = `/${subAppRouter}/${curItem.type}/${curItem.url}`
+      obj[routerName] = curItem.name
+    }
+    return obj
+  },{})
+}
+
+export {getMenuTreeList,getMenuPower,getParentMenus,getMenuTitles}

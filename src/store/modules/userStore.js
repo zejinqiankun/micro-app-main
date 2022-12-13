@@ -13,6 +13,7 @@ const actions = {
     setUserInfo({ commit , dispatch}, {userInfo, menuList}) {
         commit('SET_USER_INFO', userInfo)
         // 保存菜单树,保存菜单列表
+        dispatch("menu/setMenuTitles", menuList, { root: true });
         dispatch("menu/saveMenuTreeList", menuList, { root: true });
     },
     // 退出登录清除相关信息

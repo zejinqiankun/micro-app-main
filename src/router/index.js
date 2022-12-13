@@ -42,10 +42,7 @@ const routes = [
   },
   {
     path: `/${subAppRouter}/*`,
-    component: Layout,
-    meta: {
-      title: 'app'
-    }
+    component: Layout
   },
   {
     path: '/404',

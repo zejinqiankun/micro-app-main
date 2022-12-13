@@ -35,6 +35,9 @@ export default {
     //标题
     tabTagTitle(item){
       let title = item.meta ? item.meta.title : ''
+      if (!title&&JSON.stringify(this.menuTitles).indexOf(item.path)>=0) {
+        title = this.menuTitles[item.path]
+      }
       return title
     },
     //删除
@@ -101,6 +104,7 @@ export default {
   computed: {
     ...mapState({
       tabTagList: state => state.tab.tabTagList, //标签
+      menuTitles: state => state.menu.menuTitles, //标签
     })
   },
   created() {
