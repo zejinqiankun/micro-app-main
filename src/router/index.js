@@ -2,9 +2,17 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '../layout';
 import store from "../store";
+import {subAppRouter} from '@/config';
 
 Vue.use(VueRouter)
-
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err);
+};
+const originalReplace = VueRouter.prototype.replace;
+VueRouter.prototype.replace = function push(location) {
+  return originalReplace.call(this, location).catch((err) => err);
+};
 const routes = [
   {
     path: '/',
@@ -15,6 +23,9 @@ const routes = [
         path: '/home',
         name: 'home',
         component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue'),
+        meta: {
+          title: '首页'
+        }
       }
     ]
   },
@@ -30,10 +41,24 @@ const routes = [
     },
   },
   {
-    path: '/app/*',
-    name: 'home',
+    path: `/${subAppRouter}/*`,
     component: Layout,
+    meta: {
+      title: 'app'
+    }
   },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('../views/errorPage/404.vue'),
+    meta: {
+      notRequireAuth: true
+    }
+  },
+  {
+    path: '/*',
+    redirect: '404'
+  }
 ]
 
 const router = new VueRouter({
@@ -43,11 +68,12 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to,from,next) => {
+  // todo: 504需要加入
   if (to.meta.notRequireAuth) {
     next();
   }else {
     // 确认是否已登录
-    const userInfo = store.state.userInfo;
+    const userInfo = store.getters.userInfo;
     //1.未登录
     if (!userInfo || !userInfo.userName) {
       return router.replace({

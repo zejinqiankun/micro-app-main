@@ -18,6 +18,9 @@
   </div>
 </template>
 <script>
+import menuLst from '@/mock/menuJson';
+import initMicroApp from '@/utils/initMicroApp';
+import {getParentMenus} from '@/utils/menuTree';
 export default {
   data() {
     return {
@@ -30,7 +33,12 @@ export default {
   methods: {
     onSubmit() {
       if (this.form.userName && this.form.password) {
-        this.$store.dispatch('setUserInfo', this.form);
+        this.$store.dispatch('user/setUserInfo', {userInfo:this.form,menuList:menuLst});
+        const parentMenus = getParentMenus(menuLst)
+        console.log(parentMenus)
+        if (parentMenus && parentMenus.length) {
+          initMicroApp(parentMenus)
+        }
         this.$router.push({name: 'home'})
       }
     },
